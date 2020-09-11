@@ -5,7 +5,7 @@ export default function Product({ title, image, price, detail }) {
     return (
         <div>
             <div>
-                <img src={image} />
+                <img src={image} alt={title} />
                 <span>{title}</span>
             </div>
             <div>

@@ -1,11 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
 import Products from "./pages/products";
 import Detail from './pages/detail'
+import Navbar from './components/navbar';
 
 function App() {
 
   return (
+    // <Navbar />
+
     <Products />
 
     // <Detail
