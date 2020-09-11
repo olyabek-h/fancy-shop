@@ -11,7 +11,8 @@ export const INIT_STATE = {
         // }
     ],
     loading: false,
-    carts: [],
+    cart: [],
+    totalPrice: 0,
     isDrawerOpen: false,
 }
 
@@ -25,6 +26,8 @@ const ACTION_HANDLERS = {
     [ACTIONS.LOADING]: handleLoading,
     [ACTIONS.ADDED_TO_CART]: handleAddedToCart,
     [ACTIONS.TOGGLE_DRAWER]: handleToggleDrawer,
+    [ACTIONS.REMOVED_FROM_CART]: handleRemovedFromCart,
+    [ACTIONS.CART_CLEARED]: handleCartCleared,
 }
 
 export function handleInitDataLoaded(state, payload) {
@@ -52,22 +55,22 @@ export function handleLoading(state) {
     }
 }
 
-export function handleAddedToCart(state, productId) {
-    const index = state.carts.findIndex(cart => cart.productId === productId);
-    const newCarts = [...state.carts];
+export function handleAddedToCart(state, { productId, productPrice }) {
+    const index = state.cart.findIndex(cart => cart.productId === productId);
+    const newCart = [...state.cart];
 
     if (index === -1) {
-        newCarts.push({ productId, count: 1 })
+        newCart.push({ productId, count: 1 })
     }
     else {
-        const updatedProduct = { productId, count: state.carts[index].count + 1 };
-        newCarts.splice(index, 1, updatedProduct);
+        const updatedProduct = { productId, count: state.cart[index].count + 1 };
+        newCart.splice(index, 1, updatedProduct);
     }
-    console.log(newCarts);
 
     return {
         ...state,
-        carts: newCarts,
+        cart: newCart,
+        totalPrice: state.totalPrice + productPrice,
     }
 }
 
@@ -75,5 +78,32 @@ export function handleToggleDrawer(state) {
     return {
         ...state,
         isDrawerOpen: !state.isDrawerOpen,
+    }
+}
+
+export function handleRemovedFromCart(state, { productId, productCount, productPrice }) {
+    const index = state.cart.findIndex(cart => cart.productId === productId);
+    const newCart = [...state.cart];
+
+    if (productCount === 1) {
+        newCart.splice(index, 1);
+    }
+    else {
+        const updatedProduct = { productId, count: state.cart[index].count - 1 };
+        newCart.splice(index, 1, updatedProduct);
+    }
+
+    return {
+        ...state,
+        cart: newCart,
+        totalPrice: state.totalPrice - productPrice,
+    }
+}
+
+export function handleCartCleared(state) {
+    return {
+        ...state,
+        cart: [],
+        totalPrice: 0,
     }
 }

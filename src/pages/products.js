@@ -17,9 +17,9 @@ export default function Products() {
         console.log('product', productId);
     }
 
-    function handleAddToCard(productId, e) {
+    function handleAddToCard(productId, productPrice, e) {
         e.stopPropagation();
-        dispatch(addedToCart(productId));
+        dispatch(addedToCart(productId, productPrice));
     }
 
     return (
@@ -40,7 +40,7 @@ export default function Products() {
                                 image={product.image}
                                 price={product.price}
                                 detail={product.detail}
-                                onAddToCart={(e) => handleAddToCard(product.id, e)}
+                                onAddToCart={(e) => handleAddToCard(product.id, product.price, e)}
                                 onProductClick={() => handleProductClick(product.id)}
                             />
                         )

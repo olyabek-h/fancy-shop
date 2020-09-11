@@ -8,7 +8,7 @@ import { toggleDrawer } from '../stateManager/actionCreator'
 
 export default function Navbar() {
     const dispatch = useDispatch();
-    const { carts } = useAppState();
+    const { cart } = useAppState();
 
     function handleCartClick() {
         dispatch(toggleDrawer());
@@ -22,7 +22,7 @@ export default function Navbar() {
                 <span>House</span>
             </div>
             <FontAwesomeIcon icon={faCartPlus} size='lg' onClick={handleCartClick} />
-            <span>{carts.length === 0 ? '' : carts.length}</span>
+            <span>{cart.length === 0 ? '' : cart.length}</span>
         </div>
     )
 }
