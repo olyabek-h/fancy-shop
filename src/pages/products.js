@@ -1,16 +1,26 @@
 import React, { useEffect } from 'react'
 import styles from './products.module.scss'
 import Product from '../components/product'
-import { reducer, INIT_STATE } from '../stateManager/reducer'
-import { loadingInitData } from '../stateManager/actionCreator'
-import useThunkReducer from 'react-hook-thunk-reducer'
+import { loadingInitData, addedToCart } from '../stateManager/actionCreator'
+import { useDispatch } from '../context/dispatchContext'
+import { useAppState } from '../context/appStateContext'
 
 export default function Products() {
-    const [{ products, loading }, dispatch] = useThunkReducer(reducer, INIT_STATE);
+    const dispatch = useDispatch();
+    const { products, loading } = useAppState();
 
     useEffect(() => {
         dispatch(loadingInitData());
     }, [dispatch])
+
+    function handleProductClick(productId) {
+        console.log('product', productId);
+    }
+
+    function handleAddToCard(productId, e) {
+        e.stopPropagation();
+        dispatch(addedToCart(productId));
+    }
 
     return (
         <div>
@@ -30,6 +40,8 @@ export default function Products() {
                                 image={product.image}
                                 price={product.price}
                                 detail={product.detail}
+                                onAddToCart={(e) => handleAddToCard(product.id, e)}
+                                onProductClick={() => handleProductClick(product.id)}
                             />
                         )
                     }
