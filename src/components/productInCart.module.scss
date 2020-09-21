@@ -1,0 +1,38 @@
+@import '../constants/constants.scss';
+
+.cart-item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr auto;
+    grid-column-gap: 1.5rem;
+    margin: 1.5rem 0;
+
+    img {
+        width: 100px;
+    }
+
+    h4 {
+        font-size: 0.85rem;
+        text-transform: capitalize;
+        letter-spacing: $mainSpacing;
+    }
+
+    h5 {
+        margin: 0.5rem 0;
+        letter-spacing: $mainSpacing;
+    }
+
+    .remove-item {
+        color: grey;
+        cursor: pointer;
+    }
+
+    .item-amount {
+        text-align: center;
+    }
+
+    .icon {
+        color: $primaryColor;
+        cursor: pointer;
+    }
+}

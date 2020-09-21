@@ -1,11 +1,13 @@
 import React from 'react'
+import Drawer from '../components/drawer'
 import Navbar from '../components/navbar'
 
-export default function MainLayout({ Component }) {
+export default function MainLayout({ children }) {
     return (
         <div>
             <Navbar />
-            <Component />
+            <Drawer />
+            {children}
         </div>
     )
 }

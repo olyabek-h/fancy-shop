@@ -1,0 +1,61 @@
+@import '../constants/constants.scss';
+
+.product {
+    .img-container {
+        position: relative;
+        overflow: hidden;
+
+        .product-img {
+            display: block;
+            width: 100%;
+            min-height: 12rem;
+            transition: $mainTransition;
+        }
+
+        .bag-btn {
+            position: absolute;
+            top: 55%;
+            right: 0;
+            background: $primaryColor;
+            border: none;
+            text-transform: uppercase;
+            padding: 0.5rem 0.75rem;
+            letter-spacing: $mainSpacing;
+            font-weight: bold;
+            transition: $mainTransition;
+            transform: translateX(101%);
+            cursor: pointer;
+
+            .icon {
+                margin-right: 0.5rem;
+            }
+
+            &:hover {
+                color: $mainWhite;
+            }
+        }
+
+        &:hover .bag-btn {
+            transform: translateX(0);
+        }
+    }
+
+    &:hover .product-img {
+        opacity: 0.5;
+    }
+
+    h3 {
+        text-transform: capitalize;
+        font-size: 1.1rem;
+        margin-top: 1rem;
+        letter-spacing: $mainSpacing;
+        text-align: center;
+    }
+
+    h4 {
+        margin-top: 0.7rem;
+        letter-spacing: $mainSpacing;
+        color: $primaryColor;
+        text-align: center;
+    }
+}

@@ -6,10 +6,20 @@ import { useDispatch } from '../context/dispatchContext'
 import { useAppState } from '../context/appStateContext'
 import { addedToCart, cartCleared, removedFromCart, toggleDrawer } from '../stateManager/actionCreator'
 import ProductInCart from './productInCart'
+import classNames from 'classnames'
 
 export default function Drawer() {
     const dispatch = useDispatch();
-    const { totalPrice, cart, products } = useAppState();
+    const { totalPrice, cart, products, isDrawerOpen } = useAppState();
+
+    const drawerClassName = classNames({
+        [styles['cart-overlay']]: true,
+        [styles['transparentBcg']]: isDrawerOpen,
+    })
+    const containerClassName = classNames({
+        [styles['cart']]: true,
+        [styles['showCart']]: isDrawerOpen,
+    })
 
     function handleCloseDrawer() {
         dispatch(toggleDrawer());
@@ -28,26 +38,33 @@ export default function Drawer() {
     }
 
     return (
-        <div className={styles['drawer']} >
-            <FontAwesomeIcon icon={faWindowClose} onClick={handleCloseDrawer} />
-            <p>Your Cart</p>
-            {cart.map(cartItem => {
-                const product = products.find(product => product.id === cartItem.productId);
-                return (
-                    <ProductInCart
-                        key={product.id}
-                        title={product.title}
-                        image={product.image}
-                        price={product.price}
-                        count={cartItem.count}
-                        onAddToCart={() => handleAddToCart(product.id, product.price)}
-                        onRemoveFromCart={() => handleRemoveFromCart(product.id, cartItem.count, product.price)}
-                    />
-                )
+        <>
+            <div className={drawerClassName} onClick={handleCloseDrawer} >
+            </div>
+            <div className={containerClassName} >
+                <FontAwesomeIcon className={styles['close-cart']} icon={faWindowClose} onClick={handleCloseDrawer} />
+                <h2>your cart</h2>
+                {cart.map(cartItem => {
+                    const product = products.find(product => product.id === cartItem.productId);
+                    return (
+                        <ProductInCart
+                            key={product.id}
+                            title={product.title}
+                            image={product.image}
+                            price={product.price}
+                            count={cartItem.count}
+                            onAddToCart={() => handleAddToCart(product.id, product.price)}
+                            onRemoveFromCart={() => handleRemoveFromCart(product.id, cartItem.count, product.price)}
+                        />
+                    )
 
-            })}
-            <p>Your Total: <span>{totalPrice}</span> $</p>
-            <button onClick={handleClearCart} >CLEAR CART</button>
-        </div>
+                })}
+                <div className={styles['cart-footer']} >
+                    <h3>your yotal: <span >{totalPrice}</span> $</h3>
+                    <button className={styles['banner-btn']} onClick={handleClearCart} >CLEAR CART</button>
+
+                </div>
+            </div>
+        </>
     )
 }
